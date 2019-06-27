@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
 
-class SliderShowAdapter(val context: Context): PagerAdapter() {
-
-
-    private var inflater: LayoutInflater? = null
+class SliderShowAdapter(private val context: Context): PagerAdapter() {
 
     var images = intArrayOf(R.drawable.angrybirds,
         R.drawable.asphalt8,
@@ -35,7 +33,14 @@ class SliderShowAdapter(val context: Context): PagerAdapter() {
     override fun instantiateItem(viewGroup: ViewGroup, position: Int): Any {
         val view = LayoutInflater.from(context).inflate(R.layout.slide_show_layout, viewGroup, false)
         val imageView = view?.findViewById<ImageView>(R.id.image_view)
-        imageView?.setImageResource(images[position])
+        imageView?.let {
+            Glide.with(context).load(images[position]).into(it)
+            it.setOnClickListener {
+                //clicklistener
+            }
+        }
+
+        //imageView?.setImageResource(images[position])
         viewGroup.addView(view)
         return  view
     }
